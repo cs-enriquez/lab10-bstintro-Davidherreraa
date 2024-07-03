@@ -5,11 +5,18 @@ using namespace std;
 // Implement the node class we will need for our Binary Search Tree
 class Node {
 	public:
+	int key;
+	Node *left;
+	Node *right;
 		// the Node should contain
 		// 	- an integer "key" that holds the value of the Node
 		// 	- a pointer to each child possible child node ("right" and "left")
 
-
+	Node(int k = 0) {
+	key = k;
+	left = nullptr;
+	right = nullptr;
+	}
 		// Write a constructor for the Node
 		// input: only an integer value for "key", no pointer arguments
 		// 		right and left pointers should be null
@@ -21,8 +28,18 @@ class Node {
 // {13, 0, 7, 6, 21, 15, -2, 12, 99, 18, 19, -1}
 Node* createTree() {
 	// root
-	Node *root = nullptr;
-
+	Node *root = 13;
+	root -> left -> key = 0;
+	root -> left -> right -> key = 7;
+	root -> left -> right -> left -> key = 6;
+	root -> right -> key = 21;
+	root -> right -> left -> key = 15;
+	root -> left -> left -> key = -2;
+	root -> left -> right -> right -> key = 12;
+	root -> right -> right -> key = 99;
+	root -> right -> left -> right -> key = 18;
+	root -> right -> left -> right -> right -> key = 1;
+	root -> left -> left -> right -> key = -1;
 	// level 1 (children of root)
 
 	// level 2 (children of 0)
@@ -48,12 +65,19 @@ Node* createTree() {
 // 	returns: true or false depending on if the value is found
 // You should write this function recursively! What is the base case? What is the general case?
 bool searchTree(int target, Node* root) {
-	// Base cases
+	if (root == nullptr) {
+		return false;
+	} else if (root -> key == target) {
+		true;
+	} else {
+	if (target < root -> key) {
+		searchTree(target, root -> left)
+	}
+	if (target > root -> key) {
+		searchTree(target, root -> right)
+	}
 	return false;
-
-	// General case
-	return false;
-	
+	}
 }
 
 // Write a function that will return the total number of Nodes in the tree
@@ -62,9 +86,10 @@ bool searchTree(int target, Node* root) {
 // You should write this function recursively!
 int treeSize(Node* root) {
 	// base case
+	if (root == nullptr) {
 	return -1;
-
-	// General case
+	} else { 
+		return 1 + treeSize(root -> left) + treeSize(root -> right)
 	return -1;
 
 }
